@@ -7,12 +7,8 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 var dbUrl = 'mongodb://localhost/GeoChat';
-mongoose.connect(dbUrl, function(err, res) {
-	if (err) {
-		console.log('DB CONNECTION FAILED: ' + err)
-	} else {
-		console.log('DB CONNECTION SUCCESS: ' + dbUrl)
-	}
+mongoose.connect(dbUrl, {
+  useMongoClient: true
 });
 
 var index = require('./routes/index');
