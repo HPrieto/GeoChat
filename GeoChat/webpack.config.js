@@ -17,16 +17,17 @@ module.exports = {
 	devtool: '#source-map',
 	// Tell webpack HOW to transpile code
 	module: {
-		{
-			// Use babel and use these presets
-			loaders: [
-				test: /\.jsx$?/,
+		// Use babel and use these presets
+		loaders: [
+			{
+
+				test: /\.jsx?$/,
 				exclude: /(node_modules)/,
-				loader: 'babel',
+				loader: 'babel-loader',
 				query: {
 					presets: ['react', 'es2015']
 				}
-			]
-		}
+			}
+		]
 	}
-}
+} // 2:10
