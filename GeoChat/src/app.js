@@ -3,10 +3,15 @@ import React, { Component } from 'react';
 // Bring React code to the dom, renders code to dom
 import ReactDOM from 'react-dom';
 
+// import components
+import Zones from './components/Zones';
+
 class App extends Component {
 	render() {
 		return (
-			<div>Hello React!</div>
+			<div>
+				<Zones />
+			</div>
 		)
 	}
 }
