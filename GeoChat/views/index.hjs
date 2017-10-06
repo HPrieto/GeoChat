@@ -4,7 +4,9 @@
     <title>{{ title }}</title>
   </head>
   <body>
+  	<!-- react starting point -->
     <div id='root'></div>
+    <!-- webpack optimized package -->
     <script type='text/javascript' src='/build/bundle.js'></script>
   </body>
 </html>
