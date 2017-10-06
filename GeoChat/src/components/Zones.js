@@ -23,14 +23,13 @@ class Zones extends Component {
 		const fourthZone = {name: 'Zone 4', zipCode:'10015', numComments:13}
 		const fifthZone  = {name: 'Zone 5', zipCode:'10016', numComments:1}
 		return (
+			const zonesList = this.state.zones.map((zone, index) => {
+				return (
+					<li><Zone zone={zone}/></li>
+				)
+			});
 			<div>
-				<ol>
-					<li><Zone zone={this.state.zones[0]}  /></li>
-					<li><Zone zone={this.state.zones[1]} /></li>
-					<li><Zone zone={this.state.zones[2]}  /></li>
-					<li><Zone zone={this.state.zones[3]} /></li>
-					<li><Zone zone={this.state.zones[4]}  /></li>
-				</ol>
+				<ol>{zonesList}</ol>
 			</div>
 		)
 	}
