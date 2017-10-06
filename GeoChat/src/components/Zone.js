@@ -4,9 +4,9 @@ class Zone extends Component {
 	render() {
 		return (
 			<div>
-				<h2><a href="#">{this.props.name}</a></h2>
-				<span>{this.props.zipCode}</span><br />
-				<span>10 comments</span>
+				<h2><a href="#">{this.props.zone.name}</a></h2>
+				<span>{this.props.zone.zipCode}</span><br />
+				<span>{this.props.zone.numComments} comments</span>
 			</div>
 		)
 	}

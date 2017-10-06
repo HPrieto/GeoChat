@@ -21252,12 +21252,22 @@ var Zones = function (_Component) {
 	function Zones() {
 		_classCallCheck(this, Zones);
 
-		return _possibleConstructorReturn(this, (Zones.__proto__ || Object.getPrototypeOf(Zones)).apply(this, arguments));
+		var _this = _possibleConstructorReturn(this, (Zones.__proto__ || Object.getPrototypeOf(Zones)).call(this));
+
+		_this.state = {
+			zones: [{ name: 'Zone 1', zipCode: '10012', numComments: 9 }, { name: 'Zone 2', zipCode: '10013', numComments: 3 }, { name: 'Zone 3', zipCode: '10014', numComments: 12 }, { name: 'Zone 4', zipCode: '10015', numComments: 13 }, { name: 'Zone 5', zipCode: '10016', numComments: 1 }]
+		};
+		return _this;
 	}
 
 	_createClass(Zones, [{
 		key: 'render',
 		value: function render() {
+			var firstZone = { name: 'Zone 1', zipCode: '10012', numComments: 9 };
+			var secondZone = { name: 'Zone 2', zipCode: '10013', numComments: 3 };
+			var thirdZone = { name: 'Zone 3', zipCode: '10014', numComments: 12 };
+			var fourthZone = { name: 'Zone 4', zipCode: '10015', numComments: 13 };
+			var fifthZone = { name: 'Zone 5', zipCode: '10016', numComments: 1 };
 			return _react2.default.createElement(
 				'div',
 				null,
@@ -21267,27 +21277,27 @@ var Zones = function (_Component) {
 					_react2.default.createElement(
 						'li',
 						null,
-						_react2.default.createElement(_Zone2.default, { name: 'Zone 1', zipCode: '10012', numComments: 7 })
+						_react2.default.createElement(_Zone2.default, { zone: this.state.zones[0] })
 					),
 					_react2.default.createElement(
 						'li',
 						null,
-						_react2.default.createElement(_Zone2.default, { name: 'Zone 2', zipCode: '10013' })
+						_react2.default.createElement(_Zone2.default, { zone: this.state.zones[1] })
 					),
 					_react2.default.createElement(
 						'li',
 						null,
-						_react2.default.createElement(_Zone2.default, { name: 'Zone 3', zipCode: '10014' })
+						_react2.default.createElement(_Zone2.default, { zone: this.state.zones[2] })
 					),
 					_react2.default.createElement(
 						'li',
 						null,
-						_react2.default.createElement(_Zone2.default, { name: 'Zone 4', zipCode: '10015' })
+						_react2.default.createElement(_Zone2.default, { zone: this.state.zones[3] })
 					),
 					_react2.default.createElement(
 						'li',
 						null,
-						_react2.default.createElement(_Zone2.default, { name: 'Zone 5', zipCode: '10016' })
+						_react2.default.createElement(_Zone2.default, { zone: this.state.zones[4] })
 					)
 				)
 			);
@@ -21345,19 +21355,20 @@ var Zone = function (_Component) {
 					_react2.default.createElement(
 						"a",
 						{ href: "#" },
-						this.props.name
+						this.props.zone.name
 					)
 				),
 				_react2.default.createElement(
 					"span",
 					null,
-					this.props.zipCode
+					this.props.zone.zipCode
 				),
 				_react2.default.createElement("br", null),
 				_react2.default.createElement(
 					"span",
 					null,
-					"10 comments"
+					this.props.zone.numComments,
+					" comments"
 				)
 			);
 		}
