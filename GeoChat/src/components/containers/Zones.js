@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Zone from '../presentation/Zone.js';
+import superagent from 'superagent';
 
 class Zones extends Component {
 	constructor() {
@@ -28,6 +29,33 @@ class Zones extends Component {
 		updatedZones.push(this.state.zone)
 		this.setState({
 			zones: updatedZones
+		})
+	}
+
+	/* lifecycle method called when component shows up on the DOM */
+	componentDidMount() {
+		/* 
+			Using superagent library to make a GET request:
+				get:   GET request url
+				query: any url parameters
+				set:   what kind of data we're expecting
+				end:   callback function from superagent
+		*/
+		superagent
+		.get('/api/zone')
+		.query(null)
+		.set('Accept', 'application/json')
+		.end((err, res) => {
+			if (err) {
+				alert('Error: ' + err)
+				return
+			}
+			// output get request response
+			console.log(JSON.stringify(res.body.results))
+			let results = res.body.results
+			this.setState({
+				zones: results
+			})
 		})
 	}
 
