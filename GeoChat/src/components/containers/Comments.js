@@ -6,6 +6,10 @@ class Comments extends Component {
 	constructor() {
 		super()
 		this.state = {
+			comment: {
+				username: '',
+				body: ''
+			},
 			list: [
 				{body: 'comment 1', username: 'dtrump', timestamp: '10:30'},
 				{body: 'comment 2', username: 'HClint', timestamp: '11:30'},
@@ -15,8 +19,32 @@ class Comments extends Component {
 		}
 	}
 
+	updateComment(event) {
+		console.log('update comment: ' + event.target.value)
+		let comment = event.target.value
+		let updatedComment = Object.assign({}, this.state.comment)
+		updatedComment['comment'] = comment
+		this.setState({
+			comment: updatedComment
+		})
+	}
+
 	updateUsername(event) {
 		console.log('update username: ' + event.target.value)
+
+		// username from input field
+		let username = event.target.value
+
+		// Create copy of comment from state before updating
+		let updatedComment = Object.assign({}, this.state.comment)
+
+		// Update copied state
+		updatedComment['username'] = username
+
+		// Update state
+		this.setState({
+			comment: updatedComment
+		})
 	}
 
 	submitComment() {
@@ -39,7 +67,7 @@ class Comments extends Component {
 						{ commentList }
 					</ul>
 					<input onChange={this.updateUsername.bind(this)} className='form-control' type='text' placeholder='Username' /><br />
-					<input className='form-control' type='text' placeholder='Comment' /><br />
+					<input onChange={this.updateComment.bind(this)}  className='form-control' type='text' placeholder='Comment' /><br />
 					<button className='btn btn-info' onClick={this.submitComment.bind(this)}>Submit Comment</button>
 				</div>
 			</div>

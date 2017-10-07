@@ -21565,15 +21565,44 @@ var Comments = function (_Component) {
 		var _this = _possibleConstructorReturn(this, (Comments.__proto__ || Object.getPrototypeOf(Comments)).call(this));
 
 		_this.state = {
+			comment: {
+				username: '',
+				body: ''
+			},
 			list: [{ body: 'comment 1', username: 'dtrump', timestamp: '10:30' }, { body: 'comment 2', username: 'HClint', timestamp: '11:30' }, { body: 'comment 3', username: 'PRyan', timestamp: '12:30' }, { body: 'comment 4', username: 'Bernie', timestamp: '01:30' }]
 		};
 		return _this;
 	}
 
 	_createClass(Comments, [{
+		key: 'updateComment',
+		value: function updateComment(event) {
+			console.log('update comment: ' + event.target.value);
+			var comment = event.target.value;
+			var updatedComment = Object.assign({}, this.state.comment);
+			updatedComment['comment'] = comment;
+			this.setState({
+				comment: updatedComment
+			});
+		}
+	}, {
 		key: 'updateUsername',
 		value: function updateUsername(event) {
 			console.log('update username: ' + event.target.value);
+
+			// username from input field
+			var username = event.target.value;
+
+			// Create copy of comment from state before updating
+			var updatedComment = Object.assign({}, this.state.comment);
+
+			// Update copied state
+			updatedComment['username'] = username;
+
+			// Update state
+			this.setState({
+				comment: updatedComment
+			});
 		}
 	}, {
 		key: 'submitComment',
@@ -21610,7 +21639,7 @@ var Comments = function (_Component) {
 					),
 					_react2.default.createElement('input', { onChange: this.updateUsername.bind(this), className: 'form-control', type: 'text', placeholder: 'Username' }),
 					_react2.default.createElement('br', null),
-					_react2.default.createElement('input', { className: 'form-control', type: 'text', placeholder: 'Comment' }),
+					_react2.default.createElement('input', { onChange: this.updateComment.bind(this), className: 'form-control', type: 'text', placeholder: 'Comment' }),
 					_react2.default.createElement('br', null),
 					_react2.default.createElement(
 						'button',
