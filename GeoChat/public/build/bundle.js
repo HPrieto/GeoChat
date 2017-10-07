@@ -21575,13 +21575,12 @@ var Comments = function (_Component) {
 	}
 
 	_createClass(Comments, [{
-		key: 'updateComment',
-		value: function updateComment(event) {
-			console.log('update comment: ' + event.target.value);
+		key: 'updateBody',
+		value: function updateBody(event) {
 			// Update comment body state
 			var comment = event.target.value;
 			var updatedComment = Object.assign({}, this.state.comment);
-			updatedComment['comment'] = comment;
+			updatedComment['body'] = comment;
 			this.setState({
 				comment: updatedComment
 			});
@@ -21589,7 +21588,6 @@ var Comments = function (_Component) {
 	}, {
 		key: 'updateUsername',
 		value: function updateUsername(event) {
-			console.log('update username: ' + event.target.value);
 			// username from input field
 			var username = event.target.value;
 			// Create copy of comment from state before updating
@@ -21636,7 +21634,7 @@ var Comments = function (_Component) {
 					),
 					_react2.default.createElement('input', { onChange: this.updateUsername.bind(this), className: 'form-control', type: 'text', placeholder: 'Username' }),
 					_react2.default.createElement('br', null),
-					_react2.default.createElement('input', { onChange: this.updateComment.bind(this), className: 'form-control', type: 'text', placeholder: 'Comment' }),
+					_react2.default.createElement('input', { onChange: this.updateBody.bind(this), className: 'form-control', type: 'text', placeholder: 'Comment' }),
 					_react2.default.createElement('br', null),
 					_react2.default.createElement(
 						'button',

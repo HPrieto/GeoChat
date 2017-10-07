@@ -19,19 +19,17 @@ class Comments extends Component {
 		}
 	}
 
-	updateComment(event) {
-		console.log('update comment: ' + event.target.value)
+	updateBody(event) {
 		// Update comment body state
 		let comment = event.target.value
 		let updatedComment = Object.assign({}, this.state.comment)
-		updatedComment['comment'] = comment
+		updatedComment['body'] = comment
 		this.setState({
 			comment: updatedComment
 		})
 	}
 
 	updateUsername(event) {
-		console.log('update username: ' + event.target.value)
 		// username from input field
 		let username = event.target.value
 		// Create copy of comment from state before updating
@@ -64,7 +62,7 @@ class Comments extends Component {
 						{ commentList }
 					</ul>
 					<input onChange={this.updateUsername.bind(this)} className='form-control' type='text' placeholder='Username' /><br />
-					<input onChange={this.updateComment.bind(this)}  className='form-control' type='text' placeholder='Comment' /><br />
+					<input onChange={this.updateBody.bind(this)}     className='form-control' type='text' placeholder='Comment' /><br />
 					<button className='btn btn-info' onClick={this.submitComment.bind(this)}>Submit Comment</button>
 				</div>
 			</div>
