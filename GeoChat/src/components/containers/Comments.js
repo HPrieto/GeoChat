@@ -21,6 +21,7 @@ class Comments extends Component {
 
 	updateComment(event) {
 		console.log('update comment: ' + event.target.value)
+		// Update comment body state
 		let comment = event.target.value
 		let updatedComment = Object.assign({}, this.state.comment)
 		updatedComment['comment'] = comment
@@ -31,16 +32,12 @@ class Comments extends Component {
 
 	updateUsername(event) {
 		console.log('update username: ' + event.target.value)
-
 		// username from input field
 		let username = event.target.value
-
 		// Create copy of comment from state before updating
 		let updatedComment = Object.assign({}, this.state.comment)
-
 		// Update copied state
 		updatedComment['username'] = username
-
 		// Update state
 		this.setState({
 			comment: updatedComment
@@ -48,7 +45,7 @@ class Comments extends Component {
 	}
 
 	submitComment() {
-		console.log('SubmitComment')
+		console.log('SubmitComment: ' + JSON.stringify(this.state.comment))
 	}
 
 	render() {

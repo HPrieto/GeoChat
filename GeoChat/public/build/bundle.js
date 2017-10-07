@@ -21578,6 +21578,7 @@ var Comments = function (_Component) {
 		key: 'updateComment',
 		value: function updateComment(event) {
 			console.log('update comment: ' + event.target.value);
+			// Update comment body state
 			var comment = event.target.value;
 			var updatedComment = Object.assign({}, this.state.comment);
 			updatedComment['comment'] = comment;
@@ -21589,16 +21590,12 @@ var Comments = function (_Component) {
 		key: 'updateUsername',
 		value: function updateUsername(event) {
 			console.log('update username: ' + event.target.value);
-
 			// username from input field
 			var username = event.target.value;
-
 			// Create copy of comment from state before updating
 			var updatedComment = Object.assign({}, this.state.comment);
-
 			// Update copied state
 			updatedComment['username'] = username;
-
 			// Update state
 			this.setState({
 				comment: updatedComment
@@ -21607,7 +21604,7 @@ var Comments = function (_Component) {
 	}, {
 		key: 'submitComment',
 		value: function submitComment() {
-			console.log('SubmitComment');
+			console.log('SubmitComment: ' + JSON.stringify(this.state.comment));
 		}
 	}, {
 		key: 'render',
