@@ -2,12 +2,14 @@
 <html>
   <head>
     <title>{{ title }}</title>
-    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   </head>
   <body>
   	<!-- react starting point -->
     <div id='root'></div>
     <!-- webpack optimized package -->
     <script type='text/javascript' src='/build/bundle.js'></script>
+    <!-- javascript bootstrap cdn -->
+    <script type='text/javascript' src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
   </body>
 </html>

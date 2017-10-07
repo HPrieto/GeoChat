@@ -1,3 +1,4 @@
+const backColor = '#E5ECF0';
 export default {
 	universal: {
 
@@ -5,7 +6,7 @@ export default {
 	zone: {
 		container: {
 		padding: 15, 
-		background: '#E5ECF0', 
+		background: backColor, 
 		marginTop: 10, 
 		borderRadius: 0
 		},
@@ -18,4 +19,14 @@ export default {
 			color: 'red'
 		}
 	},
+	comment: {
+		commentsBox: {
+			padding: 12,
+			background: backColor,
+			border: '1px solid #ddd'
+		},
+		commentsList: {
+			listStyleType: 'none'
+		}
+	}
 }
