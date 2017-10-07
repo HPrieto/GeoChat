@@ -5,15 +5,32 @@ class Zones extends Component {
 	constructor() {
 		super();
 		this.state = {
-			zones: [
-				{name: 'Zone 1', zipCode:'10012', numComments:9},
-				{name: 'Zone 2', zipCode:'10013', numComments:3},
-				{name: 'Zone 3', zipCode:'10014', numComments:12},
-				{name: 'Zone 4', zipCode:'10015', numComments:13},
-				{name: 'Zone 5', zipCode:'10016', numComments:1}
-			]
+			zone: {
+				name: '',
+				zipCode: ''
+			},
+			zones: []
 		}
 	}
+
+	/* onChange listener updates zone name and/or zipCode */
+	updateZone(event) {
+		let updatedZone = Object.assign({}, this.state.zone)
+		updatedZone[event.target.id] = event.target.value
+		this.setState({
+			zone: updatedZone
+		})
+	}
+
+	/* onClick listener that adds new zone onto zones */
+	submitZone() {
+		let updatedZones = Object.assign([], this.state.zones)
+		updatedZones.push(this.state.zone)
+		this.setState({
+			zones: updatedZones
+		})
+	}
+
 	render() {
 		const zonesList = this.state.zones.map((zone, index) => {
 			return (
@@ -23,6 +40,9 @@ class Zones extends Component {
 		return (
 			<div>
 				<ol>{zonesList}</ol>
+				<input id='name'    onChange={this.updateZone.bind(this)} className='form-control' type='text' placeholder='Name' /><br />
+				<input id='zipCode' onChange={this.updateZone.bind(this)} className='form-control' type='text' placeholder='Zip Code' /><br />
+				<button onClick={this.submitZone.bind(this)} className='btn btn-danger'>Add Zone</button>
 			</div>
 		)
 	}

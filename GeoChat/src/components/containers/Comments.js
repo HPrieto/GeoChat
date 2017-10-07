@@ -74,8 +74,8 @@ class Comments extends Component {
 					<ul style={commentsList}>
 						{ commentList }
 					</ul>
-					<input onChange={this.updateUsername.bind(this)}  className='form-control' type='text' placeholder='Username' /><br />
-					<input onChange={this.updateBody.bind(this)}      className='form-control' type='text' placeholder='Comment' /><br />
+					<input onChange={this.updateUsername.bind(this)}  className='form-control' type='text' placeholder='Username'  /><br />
+					<input onChange={this.updateBody.bind(this)}      className='form-control' type='text' placeholder='Comment'   /><br />
 					<input onChange={this.updateTimestamp.bind(this)} className='form-control' type='text' placeholder='Timestamp' /><br />
 					<button className='btn btn-info' onClick={this.submitComment.bind(this)}>Submit Comment</button>
 				</div>
