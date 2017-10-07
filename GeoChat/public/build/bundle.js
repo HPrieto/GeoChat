@@ -21571,6 +21571,11 @@ var Comments = function (_Component) {
 	}
 
 	_createClass(Comments, [{
+		key: 'updateUsername',
+		value: function updateUsername(event) {
+			console.log('update username: ' + event.target.value);
+		}
+	}, {
 		key: 'submitComment',
 		value: function submitComment() {
 			console.log('SubmitComment');
@@ -21603,7 +21608,7 @@ var Comments = function (_Component) {
 						{ style: commentsList },
 						commentList
 					),
-					_react2.default.createElement('input', { className: 'form-control', type: 'text', placeholder: 'Username' }),
+					_react2.default.createElement('input', { onChange: this.updateUsername.bind(this), className: 'form-control', type: 'text', placeholder: 'Username' }),
 					_react2.default.createElement('br', null),
 					_react2.default.createElement('input', { className: 'form-control', type: 'text', placeholder: 'Comment' }),
 					_react2.default.createElement('br', null),

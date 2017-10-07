@@ -15,6 +15,10 @@ class Comments extends Component {
 		}
 	}
 
+	updateUsername(event) {
+		console.log('update username: ' + event.target.value)
+	}
+
 	submitComment() {
 		console.log('SubmitComment')
 	}
@@ -34,7 +38,7 @@ class Comments extends Component {
 					<ul style={commentsList}>
 						{ commentList }
 					</ul>
-					<input className='form-control' type='text' placeholder='Username' /><br />
+					<input onChange={this.updateUsername.bind(this)} className='form-control' type='text' placeholder='Username' /><br />
 					<input className='form-control' type='text' placeholder='Comment' /><br />
 					<button className='btn btn-info' onClick={this.submitComment.bind(this)}>Submit Comment</button>
 				</div>
