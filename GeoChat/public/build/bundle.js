@@ -21322,31 +21322,31 @@ var Zone = function (_Component) {
 	}
 
 	_createClass(Zone, [{
-		key: "render",
+		key: 'render',
 		value: function render() {
 			return _react2.default.createElement(
-				"div",
-				null,
+				'div',
+				{ style: { padding: 15, background: '#E5ECF0', marginTop: 10, borderRadius: 0 } },
 				_react2.default.createElement(
-					"h2",
-					null,
+					'h2',
+					{ style: { marginBottom: 5 } },
 					_react2.default.createElement(
-						"a",
-						{ href: "#" },
+						'a',
+						{ style: { textDecoration: 'none', color: 'red' }, href: '#' },
 						this.props.zone.name
 					)
 				),
 				_react2.default.createElement(
-					"span",
+					'span',
 					null,
 					this.props.zone.zipCode
 				),
-				_react2.default.createElement("br", null),
+				_react2.default.createElement('br', null),
 				_react2.default.createElement(
-					"span",
+					'span',
 					null,
 					this.props.zone.numComments,
-					" comments"
+					' comments'
 				)
 			);
 		}
