@@ -11,17 +11,12 @@ class Comments extends Component {
 				body: '',
 				timestamp: ''
 			},
-			list: [
-				{body: 'comment 1', username: 'dtrump', timestamp: '10:30'},
-				{body: 'comment 2', username: 'HClint', timestamp: '11:30'},
-				{body: 'comment 3', username: 'PRyan' , timestamp: '12:30'},
-				{body: 'comment 4', username: 'Bernie', timestamp: '01:30'}
-			]
+			list: []
 		}
 	}
 
+	/* Update comment body state */
 	updateBody(event) {
-		// Update comment body state
 		let body = event.target.value
 		let updatedComment = Object.assign({}, this.state.comment)
 		updatedComment['body'] = body
@@ -30,6 +25,7 @@ class Comments extends Component {
 		})
 	}
 
+	/* Update comment username state */
 	updateUsername(event) {
 		// username from input field
 		let username = event.target.value
@@ -43,8 +39,8 @@ class Comments extends Component {
 		})
 	}
 
+	/* Update comment timestamp state */
 	updateTimestamp(event) {
-		// Update timestamp in comment state
 		let timestamp = event.target.value;
 		let updatedComment = Object.assign({}, this.state.comment)
 		updatedComment['timestamp'] = timestamp
@@ -53,8 +49,14 @@ class Comments extends Component {
 		})
 	}
 
+	/* submit a new comment */
 	submitComment() {
-		console.log('SubmitComment: ' + JSON.stringify(this.state.comment))
+		// Copy list array
+		let updatedList = Object.assign([], this.state.list)
+		updatedList.push(this.state.comment)
+		this.setState({
+			list: updatedList
+		})
 	}
 
 	render() {

@@ -21570,15 +21570,17 @@ var Comments = function (_Component) {
 				body: '',
 				timestamp: ''
 			},
-			list: [{ body: 'comment 1', username: 'dtrump', timestamp: '10:30' }, { body: 'comment 2', username: 'HClint', timestamp: '11:30' }, { body: 'comment 3', username: 'PRyan', timestamp: '12:30' }, { body: 'comment 4', username: 'Bernie', timestamp: '01:30' }]
+			list: []
 		};
 		return _this;
 	}
 
+	/* Update comment body state */
+
+
 	_createClass(Comments, [{
 		key: 'updateBody',
 		value: function updateBody(event) {
-			// Update comment body state
 			var body = event.target.value;
 			var updatedComment = Object.assign({}, this.state.comment);
 			updatedComment['body'] = body;
@@ -21586,6 +21588,9 @@ var Comments = function (_Component) {
 				comment: updatedComment
 			});
 		}
+
+		/* Update comment username state */
+
 	}, {
 		key: 'updateUsername',
 		value: function updateUsername(event) {
@@ -21600,10 +21605,12 @@ var Comments = function (_Component) {
 				comment: updatedComment
 			});
 		}
+
+		/* Update comment timestamp state */
+
 	}, {
 		key: 'updateTimestamp',
 		value: function updateTimestamp(event) {
-			// Update timestamp in comment state
 			var timestamp = event.target.value;
 			var updatedComment = Object.assign({}, this.state.comment);
 			updatedComment['timestamp'] = timestamp;
@@ -21611,10 +21618,18 @@ var Comments = function (_Component) {
 				comment: updatedComment
 			});
 		}
+
+		/* submit a new comment */
+
 	}, {
 		key: 'submitComment',
 		value: function submitComment() {
-			console.log('SubmitComment: ' + JSON.stringify(this.state.comment));
+			// Copy list array
+			var updatedList = Object.assign([], this.state.list);
+			updatedList.push(this.state.comment);
+			this.setState({
+				list: updatedList
+			});
 		}
 	}, {
 		key: 'render',
