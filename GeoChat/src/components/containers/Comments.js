@@ -62,7 +62,18 @@ class Comments extends Component {
 
 	/* Lifecycle method call when component is mounted onto DOM */
 	componentDidMount() {
-		
+		/*
+			APIManager(route, error, callback)
+		*/
+		APIManager.get('/api/comment', null, (err, res) => {
+			if (err) {
+				alert('ERROR: ' + err.message)
+				return
+			}
+			this.setState({
+				list: res.results
+			})
+		})
 	}
 
 	render() {

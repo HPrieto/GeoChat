@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Zone from '../presentation/Zone.js';
-import superagent from 'superagent';
 import styles from './styles.js';
+import { APIManager } from '../../utils';
 
 class Zones extends Component {
 	constructor() {
@@ -26,36 +26,33 @@ class Zones extends Component {
 
 	/* onClick listener that adds new zone onto zones */
 	submitZone() {
-		let updatedZones = Object.assign([], this.state.zones)
-		updatedZones.push(this.state.zone)
-		this.setState({
-			zones: updatedZones
+		let updatedZone = Object.assign([], this.state.zone)
+		updatedZone['zipCodes'] = updatedZone.zipCode.split(',')
+		APIManager.post('/api/zone', updatedZone, (err, res) => {
+			if (err) {
+				alert('ERROR: ' + err.message)
+				return
+			}
+			console.log('ZONE CREATED: ' + JSON.stringify(res))
 		})
+		// updatedZones.push(this.state.zone)
+		// this.setState({
+		// 	zones: updatedZones
+		// })
 	}
 
 	/* lifecycle method called when component shows up on the DOM */
 	componentDidMount() {
-		/* 
-			Using superagent library to make a GET request:
-				get:   GET request url
-				query: any url parameters
-				set:   what kind of data we're expecting
-				end:   callback function from superagent
+		/*
+			APIManager(route, error, callback)
 		*/
-		superagent
-		.get('/api/zone')
-		.query(null)
-		.set('Accept', 'application/json')
-		.end((err, res) => {
+		APIManager.get('/api/zone', null, (err, res) => {
 			if (err) {
-				alert('Error: ' + err)
+				alert('ERROR: ' + err.message)
 				return
 			}
-			// output get request response
-			console.log(JSON.stringify(res.body.results))
-			let results = res.body.results
 			this.setState({
-				zones: results
+				zones: res.results
 			})
 		})
 	}

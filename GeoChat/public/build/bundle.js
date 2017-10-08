@@ -21399,13 +21399,11 @@ var _Zone = __webpack_require__(42);
 
 var _Zone2 = _interopRequireDefault(_Zone);
 
-var _superagent = __webpack_require__(47);
-
-var _superagent2 = _interopRequireDefault(_superagent);
-
 var _styles = __webpack_require__(44);
 
 var _styles2 = _interopRequireDefault(_styles);
+
+var _utils = __webpack_require__(53);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21451,11 +21449,19 @@ var Zones = function (_Component) {
 	}, {
 		key: 'submitZone',
 		value: function submitZone() {
-			var updatedZones = Object.assign([], this.state.zones);
-			updatedZones.push(this.state.zone);
-			this.setState({
-				zones: updatedZones
+			var updatedZone = Object.assign([], this.state.zone);
+			updatedZone['zipCodes'] = updatedZone.zipCode.split(',');
+			_utils.APIManager.post('/api/zone', updatedZone, function (err, res) {
+				if (err) {
+					alert('ERROR: ' + err.message);
+					return;
+				}
+				console.log('ZONE CREATED: ' + JSON.stringify(res));
 			});
+			// updatedZones.push(this.state.zone)
+			// this.setState({
+			// 	zones: updatedZones
+			// })
 		}
 
 		/* lifecycle method called when component shows up on the DOM */
@@ -21465,23 +21471,16 @@ var Zones = function (_Component) {
 		value: function componentDidMount() {
 			var _this2 = this;
 
-			/* 
-   	Using superagent library to make a GET request:
-   		get:   GET request url
-   		query: any url parameters
-   		set:   what kind of data we're expecting
-   		end:   callback function from superagent
+			/*
+   	APIManager(route, error, callback)
    */
-			_superagent2.default.get('/api/zone').query(null).set('Accept', 'application/json').end(function (err, res) {
+			_utils.APIManager.get('/api/zone', null, function (err, res) {
 				if (err) {
-					alert('Error: ' + err);
+					alert('ERROR: ' + err.message);
 					return;
 				}
-				// output get request response
-				console.log(JSON.stringify(res.body.results));
-				var results = res.body.results;
 				_this2.setState({
-					zones: results
+					zones: res.results
 				});
 			});
 		}
@@ -21714,7 +21713,22 @@ var Comments = function (_Component) {
 
 	}, {
 		key: 'componentDidMount',
-		value: function componentDidMount() {}
+		value: function componentDidMount() {
+			var _this2 = this;
+
+			/*
+   	APIManager(route, error, callback)
+   */
+			_utils.APIManager.get('/api/comment', null, function (err, res) {
+				if (err) {
+					alert('ERROR: ' + err.message);
+					return;
+				}
+				_this2.setState({
+					list: res.results
+				});
+			});
+		}
 	}, {
 		key: 'render',
 		value: function render() {
@@ -23890,6 +23904,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = {
 	/* HTTP GET method */
 	get: function get(url, params, callback) {
+		/* 
+  	Using superagent library to make a GET request:
+  		get:   GET request url
+  		query: any url parameters
+  		set:   what kind of data we're expecting
+  		end:   callback function from superagent
+  */
 		_superagent2.default.get(url).query(params).set('Accept', 'application/json').end(function (err, res) {
 			if (err) {
 				callback(err, null);
@@ -23900,7 +23921,7 @@ exports.default = {
 			// Check for successful response but failed api
 			if (confirmation != 'success') {
 				// Create an error object
-				callback({ message: response.body.message }, null);
+				callback({ message: res.body.message }, null);
 				return;
 			}
 			// output get request response
@@ -23908,7 +23929,27 @@ exports.default = {
 		});
 	},
 	/* HTTP POST method */
-	post: function post() {},
+	post: function post(url, body, callback) {
+		/*
+  	Using superagent library to make a POST request:
+  		post: POST request url
+  		send: sending the package to the server
+  		set:  what kind of data we're expecting
+  		end:  callback function from superagent
+  */
+		_superagent2.default.post(url).send(body).set('Accept', 'application/json').end(function (err, res) {
+			if (err) {
+				callback(err, null);
+				return;
+			}
+			var confirmation = res.body.confirmation;
+			if (confirmation != 'success') {
+				callback({ message: res.body.message }, null);
+				return;
+			}
+			callback(null, res.body);
+		});
+	},
 	/* HTTP PUT method */
 	put: function put() {},
 	/* HTTP DELETE method */
