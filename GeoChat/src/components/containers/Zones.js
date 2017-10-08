@@ -26,19 +26,22 @@ class Zones extends Component {
 
 	/* onClick listener that adds new zone onto zones */
 	submitZone() {
-		let updatedZone = Object.assign([], this.state.zone)
+		let updatedZone = Object.assign({}, this.state.zone)
+		console.log('UpdatedZone: ' + JSON.stringify(updatedZone))
 		updatedZone['zipCodes'] = updatedZone.zipCode.split(',')
 		APIManager.post('/api/zone', updatedZone, (err, res) => {
 			if (err) {
 				alert('ERROR: ' + err.message)
 				return
 			}
-			console.log('ZONE CREATED: ' + JSON.stringify(res))
+			console.log('ZONE CREATED: ' + JSON.stringify(res.result))
+			// Add response result to Zones state
+			let updatedZones = Object.assign([], this.state.zones)
+			updatedZones.push(res.result)
+			this.setState({
+				zones: updatedZones
+			})
 		})
-		// updatedZones.push(this.state.zone)
-		// this.setState({
-		// 	zones: updatedZones
-		// })
 	}
 
 	/* lifecycle method called when component shows up on the DOM */
@@ -51,6 +54,7 @@ class Zones extends Component {
 				alert('ERROR: ' + err.message)
 				return
 			}
+			console.log('RES RESULTS: ' + JSON.stringify(res.results))
 			this.setState({
 				zones: res.results
 			})
@@ -60,9 +64,9 @@ class Zones extends Component {
 	render() {
 		const zoneStyle = styles.zone;
 		const zonesListStyle = zoneStyle.zonesList;
-		const zonesList = this.state.zones.map((zone, index) => {
+		const zonesList = this.state.zones.map((currentZone, index) => {
 			return (
-				<li key={index}><Zone currentZone={zone}/></li>
+				<li key={index}><Zone currentZone={currentZone}/></li>
 			)
 		});
 		return (

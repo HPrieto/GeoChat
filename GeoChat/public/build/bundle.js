@@ -21449,19 +21449,24 @@ var Zones = function (_Component) {
 	}, {
 		key: 'submitZone',
 		value: function submitZone() {
-			var updatedZone = Object.assign([], this.state.zone);
+			var _this2 = this;
+
+			var updatedZone = Object.assign({}, this.state.zone);
+			console.log('UpdatedZone: ' + JSON.stringify(updatedZone));
 			updatedZone['zipCodes'] = updatedZone.zipCode.split(',');
 			_utils.APIManager.post('/api/zone', updatedZone, function (err, res) {
 				if (err) {
 					alert('ERROR: ' + err.message);
 					return;
 				}
-				console.log('ZONE CREATED: ' + JSON.stringify(res));
+				console.log('ZONE CREATED: ' + JSON.stringify(res.result));
+				// Add response result to Zones state
+				var updatedZones = Object.assign([], _this2.state.zones);
+				updatedZones.push(res.result);
+				_this2.setState({
+					zones: updatedZones
+				});
 			});
-			// updatedZones.push(this.state.zone)
-			// this.setState({
-			// 	zones: updatedZones
-			// })
 		}
 
 		/* lifecycle method called when component shows up on the DOM */
@@ -21469,7 +21474,7 @@ var Zones = function (_Component) {
 	}, {
 		key: 'componentDidMount',
 		value: function componentDidMount() {
-			var _this2 = this;
+			var _this3 = this;
 
 			/*
    	APIManager(route, error, callback)
@@ -21479,7 +21484,8 @@ var Zones = function (_Component) {
 					alert('ERROR: ' + err.message);
 					return;
 				}
-				_this2.setState({
+				console.log('RES RESULTS: ' + JSON.stringify(res.results));
+				_this3.setState({
 					zones: res.results
 				});
 			});
@@ -21489,11 +21495,11 @@ var Zones = function (_Component) {
 		value: function render() {
 			var zoneStyle = _styles2.default.zone;
 			var zonesListStyle = zoneStyle.zonesList;
-			var zonesList = this.state.zones.map(function (zone, index) {
+			var zonesList = this.state.zones.map(function (currentZone, index) {
 				return _react2.default.createElement(
 					'li',
 					{ key: index },
-					_react2.default.createElement(_Zone2.default, { currentZone: zone })
+					_react2.default.createElement(_Zone2.default, { currentZone: currentZone })
 				);
 			});
 			return _react2.default.createElement(
@@ -21563,8 +21569,9 @@ var Zone = function (_Component) {
 	_createClass(Zone, [{
 		key: 'render',
 		value: function render() {
+			// console.log('ZipCodes: ' + JSON.stringify(this.props))
 			var zoneStyle = _styles2.default.zone;
-			var zipCode = this.props.currentZone.zipCodes[0];
+			var zipCodes = this.props.currentZone.zipCodes[0];
 			return _react2.default.createElement(
 				'div',
 				{ style: zoneStyle.container },
@@ -21580,7 +21587,7 @@ var Zone = function (_Component) {
 				_react2.default.createElement(
 					'span',
 					{ className: 'detail' },
-					zipCode
+					zipCodes
 				),
 				_react2.default.createElement('br', null),
 				_react2.default.createElement(
@@ -21644,8 +21651,7 @@ var Comments = function (_Component) {
 		_this.state = {
 			comment: {
 				username: '',
-				body: '',
-				timestamp: ''
+				body: ''
 			},
 			list: []
 		};
@@ -21683,29 +21689,23 @@ var Comments = function (_Component) {
 			});
 		}
 
-		/* Update comment timestamp state */
-
-	}, {
-		key: 'updateTimestamp',
-		value: function updateTimestamp(event) {
-			var timestamp = event.target.value;
-			var updatedComment = Object.assign({}, this.state.comment);
-			updatedComment['timestamp'] = timestamp;
-			this.setState({
-				comment: updatedComment
-			});
-		}
-
 		/* submit a new comment */
 
 	}, {
 		key: 'submitComment',
 		value: function submitComment() {
-			// Copy list array
-			var updatedList = Object.assign([], this.state.list);
-			updatedList.push(this.state.comment);
-			this.setState({
-				list: updatedList
+			var _this2 = this;
+
+			_utils.APIManager.post('/api/comment', this.state.comment, function (err, res) {
+				if (err) {
+					alert('ERROR: ' + err);
+					return;
+				}
+				var updatedList = Object.assign([], _this2.state.list);
+				updatedList.push(res.result);
+				_this2.setState({
+					list: updatedList
+				});
 			});
 		}
 
@@ -21714,7 +21714,7 @@ var Comments = function (_Component) {
 	}, {
 		key: 'componentDidMount',
 		value: function componentDidMount() {
-			var _this2 = this;
+			var _this3 = this;
 
 			/*
    	APIManager(route, error, callback)
@@ -21724,7 +21724,7 @@ var Comments = function (_Component) {
 					alert('ERROR: ' + err.message);
 					return;
 				}
-				_this2.setState({
+				_this3.setState({
 					list: res.results
 				});
 			});
@@ -21760,8 +21760,6 @@ var Comments = function (_Component) {
 					_react2.default.createElement('input', { onChange: this.updateUsername.bind(this), className: 'form-control', type: 'text', placeholder: 'Username' }),
 					_react2.default.createElement('br', null),
 					_react2.default.createElement('input', { onChange: this.updateBody.bind(this), className: 'form-control', type: 'text', placeholder: 'Comment' }),
-					_react2.default.createElement('br', null),
-					_react2.default.createElement('input', { onChange: this.updateTimestamp.bind(this), className: 'form-control', type: 'text', placeholder: 'Timestamp' }),
 					_react2.default.createElement('br', null),
 					_react2.default.createElement(
 						'button',
