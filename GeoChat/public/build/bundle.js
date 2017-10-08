@@ -21488,7 +21488,7 @@ var Zones = function (_Component) {
 				return _react2.default.createElement(
 					'li',
 					{ key: index },
-					_react2.default.createElement(_Zone2.default, { zone: zone })
+					_react2.default.createElement(_Zone2.default, { currentZone: zone })
 				);
 			});
 			return _react2.default.createElement(
@@ -21559,6 +21559,7 @@ var Zone = function (_Component) {
 		key: 'render',
 		value: function render() {
 			var zoneStyle = _styles2.default.zone;
+			var zipCode = this.props.currentZone.zipCodes[0];
 			return _react2.default.createElement(
 				'div',
 				{ style: zoneStyle.container },
@@ -21568,19 +21569,19 @@ var Zone = function (_Component) {
 					_react2.default.createElement(
 						'a',
 						{ style: zoneStyle.name, href: '#' },
-						this.props.zone.name
+						this.props.currentZone.name
 					)
 				),
 				_react2.default.createElement(
 					'span',
 					{ className: 'detail' },
-					this.props.zone.zipCode
+					zipCode
 				),
 				_react2.default.createElement('br', null),
 				_react2.default.createElement(
 					'span',
 					{ className: 'detail' },
-					this.props.zone.numComments,
+					this.props.currentZone.numComments,
 					' comments'
 				)
 			);
@@ -21616,6 +21617,10 @@ var _styles2 = _interopRequireDefault(_styles);
 var _Comment = __webpack_require__(45);
 
 var _Comment2 = _interopRequireDefault(_Comment);
+
+var _superagent = __webpack_require__(47);
+
+var _superagent2 = _interopRequireDefault(_superagent);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21698,6 +21703,27 @@ var Comments = function (_Component) {
 			updatedList.push(this.state.comment);
 			this.setState({
 				list: updatedList
+			});
+		}
+
+		/* Lifecycle method call when component is mounted onto DOM */
+
+	}, {
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			var _this2 = this;
+
+			_superagent2.default.get('/api/comment').query(null).set('Accept', 'application/json').end(function (err, res) {
+				if (err) {
+					alert('Error: ' + err);
+					return;
+				}
+				// output get request response
+				console.log(JSON.stringify(res.body.results));
+				var results = res.body.results;
+				_this2.setState({
+					list: results
+				});
 			});
 		}
 	}, {

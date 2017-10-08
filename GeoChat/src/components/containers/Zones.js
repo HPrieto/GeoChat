@@ -62,7 +62,7 @@ class Zones extends Component {
 	render() {
 		const zonesList = this.state.zones.map((zone, index) => {
 			return (
-				<li key={index}><Zone zone={zone}/></li>
+				<li key={index}><Zone currentZone={zone}/></li>
 			)
 		});
 		return (
