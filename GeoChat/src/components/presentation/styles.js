@@ -14,7 +14,7 @@ export default {
 			marginTop: 0,
 			marginBottom: 5
 		},
-		name: {
+		title: {
 			textDecoration: 'none', 
 			color: 'red'
 		}

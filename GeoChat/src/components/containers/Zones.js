@@ -7,6 +7,7 @@ class Zones extends Component {
 	constructor() {
 		super();
 		this.state = {
+			selected: 0,
 			zones: []
 		}
 	}
@@ -35,10 +36,16 @@ class Zones extends Component {
 				alert('ERROR: ' + err.message)
 				return
 			}
-			console.log('RES RESULTS: ' + JSON.stringify(res.results))
 			this.setState({
 				zones: res.results
 			})
+		})
+	}
+
+	/* Called when new zone is selected */
+	select(zoneIndex) {
+		this.setState({
+			selected: zoneIndex
 		})
 	}
 
@@ -46,13 +53,16 @@ class Zones extends Component {
 		const zoneStyle = styles.zone;
 		const zonesListStyle = zoneStyle.zonesList;
 		const zonesList = this.state.zones.map((currentZone, index) => {
+			let selected = (this.state.selected===index) ? true : false;
 			return (
-				<li key={index}><Zone currentZone={currentZone}/></li>
+				<li key={index}><Zone id={index} onSelect={this.select.bind(this)} isSelected={selected} currentZone={currentZone}/></li>
 			)
 		});
 		return (
 			<div>
-				<ol style={zonesListStyle}>{zonesList}</ol>
+				<ol style={zonesListStyle}>
+					{zonesList}
+				</ol>
 				<CreateZone onCreate={this.submitZone.bind(this)}/>
 			</div>
 		)

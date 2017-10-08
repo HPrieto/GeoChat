@@ -21361,7 +21361,7 @@ exports.default = {
 			marginTop: 0,
 			marginBottom: 5
 		},
-		name: {
+		title: {
 			textDecoration: 'none',
 			color: 'red'
 		}
@@ -21420,6 +21420,7 @@ var Zones = function (_Component) {
 		var _this = _possibleConstructorReturn(this, (Zones.__proto__ || Object.getPrototypeOf(Zones)).call(this));
 
 		_this.state = {
+			selected: 0,
 			zones: []
 		};
 		return _this;
@@ -21460,22 +21461,34 @@ var Zones = function (_Component) {
 					alert('ERROR: ' + err.message);
 					return;
 				}
-				console.log('RES RESULTS: ' + JSON.stringify(res.results));
 				_this3.setState({
 					zones: res.results
 				});
 			});
 		}
+
+		/* Called when new zone is selected */
+
+	}, {
+		key: 'select',
+		value: function select(zoneIndex) {
+			this.setState({
+				selected: zoneIndex
+			});
+		}
 	}, {
 		key: 'render',
 		value: function render() {
+			var _this4 = this;
+
 			var zoneStyle = _styles2.default.zone;
 			var zonesListStyle = zoneStyle.zonesList;
 			var zonesList = this.state.zones.map(function (currentZone, index) {
+				var selected = _this4.state.selected === index ? true : false;
 				return _react2.default.createElement(
 					'li',
 					{ key: index },
-					_react2.default.createElement(_presentation.Zone, { currentZone: currentZone })
+					_react2.default.createElement(_presentation.Zone, { id: index, onSelect: _this4.select.bind(_this4), isSelected: selected, currentZone: currentZone })
 				);
 			});
 			return _react2.default.createElement(
@@ -21535,22 +21548,33 @@ var Zone = function (_Component) {
 	}
 
 	_createClass(Zone, [{
+		key: 'zoneSelected',
+		value: function zoneSelected(event) {
+			event.preventDefault();
+			this.props.onSelect(this.props.id);
+		}
+	}, {
 		key: 'render',
 		value: function render() {
 			// console.log('ZipCodes: ' + JSON.stringify(this.props))
 			var zoneStyle = _styles2.default.zone;
 			var zipCodes = this.props.currentZone.zipCodes[0];
+			var title = this.props.isSelected ? _react2.default.createElement(
+				'a',
+				{ style: zoneStyle.title, href: '#' },
+				this.props.currentZone.name
+			) : _react2.default.createElement(
+				'a',
+				{ href: '#' },
+				this.props.currentZone.name
+			);
 			return _react2.default.createElement(
 				'div',
 				{ style: zoneStyle.container },
 				_react2.default.createElement(
 					'h2',
-					{ style: zoneStyle.header },
-					_react2.default.createElement(
-						'a',
-						{ style: zoneStyle.name, href: '#' },
-						this.props.currentZone.name
-					)
+					{ style: zoneStyle.header, onClick: this.zoneSelected.bind(this) },
+					title
 				),
 				_react2.default.createElement(
 					'span',
@@ -24047,7 +24071,6 @@ var CreateZone = function (_Component) {
 	_createClass(CreateZone, [{
 		key: 'updateZone',
 		value: function updateZone(event) {
-			console.log('updateZone: ' + event.target.value);
 			var updatedZone = Object.assign({}, this.state.zone);
 			updatedZone[event.target.id] = event.target.value;
 			this.setState({
