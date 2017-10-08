@@ -21395,13 +21395,11 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Zone = __webpack_require__(42);
-
-var _Zone2 = _interopRequireDefault(_Zone);
-
 var _styles = __webpack_require__(44);
 
 var _styles2 = _interopRequireDefault(_styles);
+
+var _presentation = __webpack_require__(55);
 
 var _utils = __webpack_require__(53);
 
@@ -21476,9 +21474,7 @@ var Zones = function (_Component) {
 		value: function componentDidMount() {
 			var _this3 = this;
 
-			/*
-   	APIManager(route, error, callback)
-   */
+			// APIManager(route, error, callback) 
 			_utils.APIManager.get('/api/zone', null, function (err, res) {
 				if (err) {
 					alert('ERROR: ' + err.message);
@@ -21499,7 +21495,7 @@ var Zones = function (_Component) {
 				return _react2.default.createElement(
 					'li',
 					{ key: index },
-					_react2.default.createElement(_Zone2.default, { currentZone: currentZone })
+					_react2.default.createElement(_presentation.Zone, { currentZone: currentZone })
 				);
 			});
 			return _react2.default.createElement(
@@ -21626,9 +21622,7 @@ var _styles = __webpack_require__(44);
 
 var _styles2 = _interopRequireDefault(_styles);
 
-var _Comment = __webpack_require__(45);
-
-var _Comment2 = _interopRequireDefault(_Comment);
+var _presentation = __webpack_require__(55);
 
 var _utils = __webpack_require__(53);
 
@@ -21716,9 +21710,7 @@ var Comments = function (_Component) {
 		value: function componentDidMount() {
 			var _this3 = this;
 
-			/*
-   	APIManager(route, error, callback)
-   */
+			// APIManager(route, error, callback)
 			_utils.APIManager.get('/api/comment', null, function (err, res) {
 				if (err) {
 					alert('ERROR: ' + err.message);
@@ -21738,7 +21730,7 @@ var Comments = function (_Component) {
 				return _react2.default.createElement(
 					'li',
 					{ key: index },
-					_react2.default.createElement(_Comment2.default, { currentComment: comment })
+					_react2.default.createElement(_presentation.Comment, { currentComment: comment })
 				);
 			});
 			return _react2.default.createElement(
@@ -23953,6 +23945,90 @@ exports.default = {
 	/* HTTP DELETE method */
 	delete: function _delete() {}
 };
+
+/***/ }),
+/* 55 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.Zone = exports.Comment = exports.CreateComment = undefined;
+
+var _CreateComment = __webpack_require__(56);
+
+var _CreateComment2 = _interopRequireDefault(_CreateComment);
+
+var _Comment = __webpack_require__(45);
+
+var _Comment2 = _interopRequireDefault(_Comment);
+
+var _Zone = __webpack_require__(42);
+
+var _Zone2 = _interopRequireDefault(_Zone);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.CreateComment = _CreateComment2.default;
+exports.Comment = _Comment2.default;
+exports.Zone = _Zone2.default;
+
+/***/ }),
+/* 56 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(3);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _styles = __webpack_require__(40);
+
+var _styles2 = _interopRequireDefault(_styles);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var CreateComment = function (_Component) {
+	_inherits(CreateComment, _Component);
+
+	function CreateComment() {
+		_classCallCheck(this, CreateComment);
+
+		return _possibleConstructorReturn(this, (CreateComment.__proto__ || Object.getPrototypeOf(CreateComment)).apply(this, arguments));
+	}
+
+	_createClass(CreateComment, [{
+		key: 'render',
+		value: function render() {
+			return _react2.default.createElement(
+				'div',
+				null,
+				'Create Comment'
+			);
+		}
+	}]);
+
+	return CreateComment;
+}(_react.Component);
+
+exports.default = CreateComment;
 
 /***/ })
 /******/ ]);

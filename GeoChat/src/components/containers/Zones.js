@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Zone from '../presentation/Zone.js';
 import styles from './styles.js';
+import { Zone } from '../presentation';
 import { APIManager } from '../../utils';
 
 class Zones extends Component {
@@ -46,9 +46,7 @@ class Zones extends Component {
 
 	/* lifecycle method called when component shows up on the DOM */
 	componentDidMount() {
-		/*
-			APIManager(route, error, callback)
-		*/
+		// APIManager(route, error, callback) 
 		APIManager.get('/api/zone', null, (err, res) => {
 			if (err) {
 				alert('ERROR: ' + err.message)
