@@ -11,30 +11,6 @@ class Comments extends Component {
 		}
 	}
 
-	/* Update comment body state */
-	updateBody(event) {
-		let body = event.target.value
-		let updatedComment = Object.assign({}, this.state.comment)
-		updatedComment['body'] = body
-		this.setState({
-			comment: updatedComment
-		})
-	}
-
-	/* Update comment username state */
-	updateUsername(event) {
-		// username from input field
-		let username = event.target.value
-		// Create copy of comment from state before updating
-		let updatedComment = Object.assign({}, this.state.comment)
-		// Update copied state
-		updatedComment['username'] = username
-		// Update state
-		this.setState({
-			comment: updatedComment
-		})
-	}
-
 	/* submit a new comment */
 	submitComment(comment) {
 		let updatedComment = Object.assign({}, comment)
