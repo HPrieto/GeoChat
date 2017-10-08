@@ -21277,12 +21277,12 @@ var Home = function (_Component) {
 					{ className: 'row' },
 					_react2.default.createElement(
 						'div',
-						{ className: 'col-md-4' },
+						{ className: 'col-md-6' },
 						_react2.default.createElement(_Zones2.default, null)
 					),
 					_react2.default.createElement(
 						'div',
-						{ className: 'col-md-8' },
+						{ className: 'col-md-6' },
 						_react2.default.createElement(_Comments2.default, null)
 					)
 				)
@@ -21403,6 +21403,10 @@ var _superagent = __webpack_require__(47);
 
 var _superagent2 = _interopRequireDefault(_superagent);
 
+var _styles = __webpack_require__(44);
+
+var _styles2 = _interopRequireDefault(_styles);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21484,6 +21488,8 @@ var Zones = function (_Component) {
 	}, {
 		key: 'render',
 		value: function render() {
+			var zoneStyle = _styles2.default.zone;
+			var zonesListStyle = zoneStyle.zonesList;
 			var zonesList = this.state.zones.map(function (zone, index) {
 				return _react2.default.createElement(
 					'li',
@@ -21496,7 +21502,7 @@ var Zones = function (_Component) {
 				null,
 				_react2.default.createElement(
 					'ol',
-					null,
+					{ style: zonesListStyle },
 					zonesList
 				),
 				_react2.default.createElement('input', { id: 'name', onChange: this.updateZone.bind(this), className: 'form-control', type: 'text', placeholder: 'Name' }),
@@ -21618,9 +21624,7 @@ var _Comment = __webpack_require__(45);
 
 var _Comment2 = _interopRequireDefault(_Comment);
 
-var _superagent = __webpack_require__(47);
-
-var _superagent2 = _interopRequireDefault(_superagent);
+var _utils = __webpack_require__(53);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21710,22 +21714,7 @@ var Comments = function (_Component) {
 
 	}, {
 		key: 'componentDidMount',
-		value: function componentDidMount() {
-			var _this2 = this;
-
-			_superagent2.default.get('/api/comment').query(null).set('Accept', 'application/json').end(function (err, res) {
-				if (err) {
-					alert('Error: ' + err);
-					return;
-				}
-				// output get request response
-				console.log(JSON.stringify(res.body.results));
-				var results = res.body.results;
-				_this2.setState({
-					list: results
-				});
-			});
-		}
+		value: function componentDidMount() {}
 	}, {
 		key: 'render',
 		value: function render() {
@@ -21789,6 +21778,9 @@ var backColor = '#E5ECF0';
 exports.default = {
 	universal: {},
 	zone: {
+		zonesList: {
+			listStyleType: 'none'
+		},
 		container: {
 			padding: 15,
 			background: backColor,
@@ -23856,6 +23848,72 @@ module.exports = function shouldRetry(err, res) {
   return false;
 };
 
+
+/***/ }),
+/* 53 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.APIManager = undefined;
+
+var _APIManager = __webpack_require__(54);
+
+var _APIManager2 = _interopRequireDefault(_APIManager);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.APIManager = _APIManager2.default;
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _superagent = __webpack_require__(47);
+
+var _superagent2 = _interopRequireDefault(_superagent);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/* Export HTTP methods */
+exports.default = {
+	/* HTTP GET method */
+	get: function get(url, params, callback) {
+		_superagent2.default.get(url).query(params).set('Accept', 'application/json').end(function (err, res) {
+			if (err) {
+				callback(err, null);
+				return;
+			}
+			// Be considerate of API failures
+			var confirmation = res.body.confirmation;
+			// Check for successful response but failed api
+			if (confirmation != 'success') {
+				// Create an error object
+				callback({ message: response.body.message }, null);
+				return;
+			}
+			// output get request response
+			callback(null, res.body);
+		});
+	},
+	/* HTTP POST method */
+	post: function post() {},
+	/* HTTP PUT method */
+	put: function put() {},
+	/* HTTP DELETE method */
+	delete: function _delete() {}
+};
 
 /***/ })
 /******/ ]);

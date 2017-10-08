@@ -4,6 +4,9 @@ export default {
 
 	},
 	zone: {
+		zonesList: {
+			listStyleType: 'none'
+		},
 		container: {
 		padding: 15, 
 		background: backColor, 

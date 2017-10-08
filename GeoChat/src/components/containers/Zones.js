@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Zone from '../presentation/Zone.js';
 import superagent from 'superagent';
+import styles from './styles.js';
 
 class Zones extends Component {
 	constructor() {
@@ -60,6 +61,8 @@ class Zones extends Component {
 	}
 
 	render() {
+		const zoneStyle = styles.zone;
+		const zonesListStyle = zoneStyle.zonesList;
 		const zonesList = this.state.zones.map((zone, index) => {
 			return (
 				<li key={index}><Zone currentZone={zone}/></li>
@@ -67,7 +70,7 @@ class Zones extends Component {
 		});
 		return (
 			<div>
-				<ol>{zonesList}</ol>
+				<ol style={zonesListStyle}>{zonesList}</ol>
 				<input id='name'    onChange={this.updateZone.bind(this)} className='form-control' type='text' placeholder='Name' /><br />
 				<input id='zipCode' onChange={this.updateZone.bind(this)} className='form-control' type='text' placeholder='Zip Code' /><br />
 				<button onClick={this.submitZone.bind(this)} className='btn btn-danger'>Add Zone</button>
