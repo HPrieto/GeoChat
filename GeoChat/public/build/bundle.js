@@ -21643,10 +21643,6 @@ var Comments = function (_Component) {
 		var _this = _possibleConstructorReturn(this, (Comments.__proto__ || Object.getPrototypeOf(Comments)).call(this));
 
 		_this.state = {
-			comment: {
-				username: '',
-				body: ''
-			},
 			list: []
 		};
 		return _this;
@@ -21687,10 +21683,11 @@ var Comments = function (_Component) {
 
 	}, {
 		key: 'submitComment',
-		value: function submitComment() {
+		value: function submitComment(comment) {
 			var _this2 = this;
 
-			_utils.APIManager.post('/api/comment', this.state.comment, function (err, res) {
+			var updatedComment = Object.assign({}, comment);
+			_utils.APIManager.post('/api/comment', updatedComment, function (err, res) {
 				if (err) {
 					alert('ERROR: ' + err);
 					return;
@@ -21749,15 +21746,7 @@ var Comments = function (_Component) {
 						{ style: commentsList },
 						commentList
 					),
-					_react2.default.createElement('input', { onChange: this.updateUsername.bind(this), className: 'form-control', type: 'text', placeholder: 'Username' }),
-					_react2.default.createElement('br', null),
-					_react2.default.createElement('input', { onChange: this.updateBody.bind(this), className: 'form-control', type: 'text', placeholder: 'Comment' }),
-					_react2.default.createElement('br', null),
-					_react2.default.createElement(
-						'button',
-						{ className: 'btn btn-info', onClick: this.submitComment.bind(this) },
-						'Submit Comment'
-					)
+					_react2.default.createElement(_presentation.CreateComment, { onCreate: this.submitComment.bind(this) })
 				)
 			);
 		}
@@ -24011,16 +24000,52 @@ var CreateComment = function (_Component) {
 	function CreateComment() {
 		_classCallCheck(this, CreateComment);
 
-		return _possibleConstructorReturn(this, (CreateComment.__proto__ || Object.getPrototypeOf(CreateComment)).apply(this, arguments));
+		var _this = _possibleConstructorReturn(this, (CreateComment.__proto__ || Object.getPrototypeOf(CreateComment)).call(this));
+
+		_this.state = {
+			comment: {
+				username: '',
+				body: ''
+			}
+		};
+		return _this;
 	}
 
+	/* Update component state onChange */
+
+
 	_createClass(CreateComment, [{
+		key: 'updateComment',
+		value: function updateComment(event) {
+			var updatedComment = Object.assign({}, this.state.comment);
+			updatedComment[event.target.id] = event.target.value;
+			this.setState({
+				comment: updatedComment
+			});
+		}
+
+		/* Send data to container component */
+
+	}, {
+		key: 'submitComment',
+		value: function submitComment() {
+			this.props.onCreate(this.state.comment);
+		}
+	}, {
 		key: 'render',
 		value: function render() {
 			return _react2.default.createElement(
 				'div',
 				null,
-				'Create Comment'
+				_react2.default.createElement('input', { onChange: this.updateComment.bind(this), id: 'username', className: 'form-control', type: 'text', placeholder: 'Username' }),
+				_react2.default.createElement('br', null),
+				_react2.default.createElement('input', { onChange: this.updateComment.bind(this), id: 'body', className: 'form-control', type: 'text', placeholder: 'Comment' }),
+				_react2.default.createElement('br', null),
+				_react2.default.createElement(
+					'button',
+					{ onClick: this.submitComment.bind(this), className: 'btn btn-info' },
+					'Submit Comment'
+				)
 			);
 		}
 	}]);

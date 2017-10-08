@@ -7,10 +7,6 @@ class Comments extends Component {
 	constructor() {
 		super()
 		this.state = {
-			comment: {
-				username: '',
-				body: ''
-			},
 			list: []
 		}
 	}
@@ -40,8 +36,9 @@ class Comments extends Component {
 	}
 
 	/* submit a new comment */
-	submitComment() {
-		APIManager.post('/api/comment', this.state.comment, (err, res) => {
+	submitComment(comment) {
+		let updatedComment = Object.assign({}, comment)
+		APIManager.post('/api/comment', updatedComment, (err, res) => {
 			if (err) {
 				alert('ERROR: ' + err)
 				return
@@ -73,19 +70,17 @@ class Comments extends Component {
 		const commentsList = styles.comment.commentsList;
 		const commentList  = this.state.list.map((comment, index) => {
 			return (
-				<li key={index}><Comment currentComment={comment}/></li>
+				<li key={ index }><Comment currentComment={ comment }/></li>
 			)
 		});
 		return (
 			<div>
 				<h2>Comments: Zone 1</h2>
-				<div style={commentsBox}>
-					<ul style={commentsList}>
+				<div style={ commentsBox }>
+					<ul style={ commentsList }>
 						{ commentList }
 					</ul>
-					<input onChange={this.updateUsername.bind(this)}  className='form-control' type='text' placeholder='Username'  /><br />
-					<input onChange={this.updateBody.bind(this)}      className='form-control' type='text' placeholder='Comment'   /><br />
-					<button className='btn btn-info' onClick={this.submitComment.bind(this)}>Submit Comment</button>
+					<CreateComment onCreate={this.submitComment.bind(this)}/>
 				</div>
 			</div>
 		)
